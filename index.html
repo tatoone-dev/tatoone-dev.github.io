@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Vita3K Games offers a comprehensive database of PlayStation Vita games for the Vita3K emulator. Search, download, and explore game details, tutorials, and support for an enhanced gaming experience.">
+    <meta name="keywords" content="Vita3K, PlayStation Vita, emulator, PS Vita games, gaming, Tatoone Games Dev">
+    <meta name="robots" content="index,follow">
+    <meta name="copyright" content="© 2025 Tatoone Games Dev">
+    <meta name="application-name" content="Vita3K Games">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Vita3K Games">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://tatoone-dev.github.io/assets/mstile-144x144.png">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vita3K Games - Your Source for PS Vita Emulator Games">
+    <meta property="og:site_name" content="tatoone-dev.github.io">
+    <meta property="og:url" content="https://tatoone-dev.github.io">
+    <meta property="og:description" content="Vita3K Games offers a comprehensive database of PlayStation Vita games for the Vita3K emulator. Search, download, and explore game details, tutorials, and support for an enhanced gaming experience.">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="Tatoone Games Dev">
+    <meta property="og:image" content="https://tatoone-dev.github.io/assets/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="Vita3K Games offers a comprehensive database of PlayStation Vita games for the Vita3K emulator. Search, download, and explore game details, tutorials, and support for an enhanced gaming experience.">
+    <meta name="twitter:title" content="Vita3K Games - Your Source for PS Vita Emulator Games">
+    <meta name="twitter:domain" content="tatoone-dev.github.io">
+    <meta name="twitter:image" content="https://tatoone-dev.github.io/assets/tw-og.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://tatoone-dev.github.io/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://tatoone-dev.github.io/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://tatoone-dev.github.io/assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://tatoone-dev.github.io/assets/favicon-16x16.png">
+    <link rel="mask-icon" href="https://tatoone-dev.github.io/assets/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="https://tatoone-dev.github.io/assets/favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <title>Vita3K Games</title>
+    <script src="https://tatoone-dev.github.io/assets/www/pako.min.js"></script>
+</head>
+<body dir="ltr" id="body">
+    <!-- Offline Modal -->
+    <div class="modal" id="offline-modal" style="display: none;">
+        <div class="modal-content">
+            <p data-key="offline_notice"></p>
+            <button onclick="document.getElementById('offline-modal').style.display='none'">OK</button>
+        </div>
+    </div>
+
+    <!-- DMCA Modal -->
+    <div class="modal" id="welcome-modal">
+        <div class="modal-content">
+            <p data-key="dmca_notice"></p>
+            <button onclick="document.getElementById('welcome-modal').style.display='none'">OK</button>
+        </div>
+    </div>
+
+    <!-- Logo and Title -->
+    <div class="logo-container">
+        <img src="https://tatoone-dev.github.io/assets/logo.png" alt="Vita3K Games Logo" class="logo-img">
+        <div class="logo-text">Vita3K Games</div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#" data-key="home" class="nav-link">Home</a>
+                <a href="#" data-key="tutorial" class="nav-link">Tutorial</a>
+                <a href="#" data-key="support" class="nav-link">Support</a>
+            </div>
+            <div class="nav-options">
+                <div class="dark-mode-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="dark-mode-switch">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="mode-icon" id="mode-icon">🌙</span>
+                </div>
+                <select id="language-select" class="language-select">
+                    <option value="en">🇬🇧</option>
+                    <option value="fr">🇫🇷</option>
+                    <option value="ar">🇸🇦</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Content -->
+    <div id="home-content">
+        <!-- Search Bar with Integrated Dropdown -->
+        <div class="search-container">
+            <div class="search-bar">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="search-input" placeholder="Search..." data-key="search_placeholder">
+                <select id="playability-select">
+                    <option value="3" data-key="fully_playable">⭐⭐⭐⭐⭐ Fully Playable</option>
+                    <option value="2" data-key="playable">🙂 Playable</option>
+                    <option value="1" data-key="least_playable">👍 At Least Playable</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Result Count -->
+        <div class="result-count" id="result-count">Showing 0 results</div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table id="game-table">
+                <thead>
+                    <tr>
+                        <th data-sort="title" data-key="title">Title</th>
+                        <th data-key="region">Region</th>
+                        <th data-key="file_size">File Size (MB)</th>
+                        <th data-key="download">Download</th>
+                        <th data-key="buy">Buy</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tutorial Content -->
+    <div id="tutorial-content" class="tutorial-container"></div>
+
+    <!-- Contact Form Content -->
+    <div id="contact-content" class="contact-container">
+        <h2 data-key="contact_us">Contact Us</h2>
+        <div class="contact-form">
+            <label for="name" data-key="name">Name</label>
+            <input type="text" id="name" required>
+            <label for="email" data-key="email">Email</label>
+            <input type="email" id="email" required>
+            <label for="message" data-key="message">Message</label>
+            <textarea id="message" required></textarea>
+            <button id="send-button" data-key="send">Send</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>© 2025 Tatoone Games Dev</footer>
+
+    <script>
+        // zrif conversion functions
+        function base64ArrayBuffer(bytes) {
+            let base64 = '';
+            const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+            const byteLength = bytes.byteLength;
+            const byteRemainder = byteLength % 3;
+            const mainLength = byteLength - byteRemainder;
+            let a, b, c, d, chunk;
+            for (let i = 0; i < mainLength; i += 3) {
+                chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
+                a = (chunk & 16515072) >> 18;
+                b = (chunk & 258048) >> 12;
+                c = (chunk & 4032) >> 6;
+                d = chunk & 63;
+                base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
+            }
+            if (byteRemainder === 1) {
+                chunk = bytes[mainLength];
+                a = (chunk & 252) >> 2;
+                b = (chunk & 3) << 4;
+                base64 += encodings[a] + encodings[b] + '==';
+            } else if (byteRemainder === 2) {
+                chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
+                a = (chunk & 64512) >> 10;
+                b = (chunk & 1008) >> 4;
+                c = (chunk & 15) << 2;
+                base64 += encodings[a] + encodings[b] + encodings[c] + '=';
+            }
+            return base64;
+        }
+        function concatTypedArrays(a, b) {
+            const c = new (a.constructor)(a.length + b.length);
+            c.set(a, 0);
+            c.set(b, a.length);
+            return c;
+        }
+        const ddd = pako.inflate(atob("eNpjYBgFo2AU0AsYAIElGt8MRJiDCAsw3xhEmIAIU4N4AwNdRxcXZ3+/EJCAkW6Ac7C7ARwYgviuQAaIdoPSzlDaBUo7QmknIM3ACIZM78+u7kx3VWYEAGJ9HV0="));
+        function encode(arr) {
+            arr = pako.deflate(arr, {
+                level: 9,
+                windowBits: 10,
+                memLevel: 8,
+                dictionary: ddd
+            });
+            while (arr.length % 3 !== 0) {
+                arr = concatTypedArrays(arr, new Uint8Array([0]));
+            }
+            return base64ArrayBuffer(arr);
+        }
+        function decode(str) {
+            try {
+                const tmp = window.atob(str);
+                const arr = new Uint8Array(tmp.length);
+                for (let i = 0; i < tmp.length; i++) {
+                    arr[i] = tmp.charCodeAt(i);
+                }
+                arr = pako.inflate(arr, {
+                    windowBits: 10,
+                    dictionary: ddd
+                });
+                if (arr.length !== 512) {
+                    throw new Error("Wrong size of work.bin");
+                }
+                return arr;
+            } catch (e) {
+                console.error("Error decoding zrif:", e);
+                return null;
+            }
+        }
+        function getBinUrl(zrif) {
+            const bin = decode(zrif);
+            if (!bin) return "#";
+            const blob = new Blob([bin], { type: "octet/stream" });
+            return window.URL.createObjectURL(blob);
+        }
+
+        // Language translations
+        const translations = {
+            en: {
+                home: "Home",
+                tutorial: "Tutorial",
+                support: "Support",
+                search_placeholder: "Search...",
+                fully_playable: "Fully Playable",
+                playable: "Playable",
+                least_playable: "At Least Playable",
+                title: "Title",
+                region: "Region",
+                file_size: "File Size (MB)",
+                download: "Download",
+                buy: "Buy",
+                download_pkg: "💾 Download as PKG",
+                download_bin: "💾 Download BIN",
+                title_id: "Title ID",
+                app_version: "App Version",
+                version: "Version",
+                last_modified: "Last Modified",
+                system_version: "System Version",
+                content_id: "Content ID",
+                rating: "Rating",
+                results: "Showing {count} results",
+                dmca_notice: "Welcome to Vita3K Games! You must legally own the original version of any game before downloading. Unauthorized downloading or distribution violates the DMCA and Sony's ownership rights of the PS Vita platform. Ensure compliance with all applicable laws.",
+                offline_notice: "No internet connection detected. An internet connection is required for full functionality.",
+                contact_us: "Contact Us",
+                name: "Name",
+                email: "Email",
+                message: "Message",
+                send: "Send",
+                tutorial_content: `
+                    <h2>What is Vita3K?</h2>
+                    <p>Vita3K is the first open-source PlayStation Vita emulator, allowing you to run Vita games on various platforms, including Android. While it’s still in development, it has made great progress in running many PS Vita games smoothly.</p>
+
+                    <h3>Step 1: Download & Install Vita3K</h3>
+                    <ol>
+                        <li><strong>Download the Vita3K APK</strong><br>
+                            Go to the official <a href="https://github.com/Vita3K/Vita3K-Android/releases/">Vita3K GitHub Releases</a> or <a href="https://vita3k.org/">Vita3K Official Site</a>.<br>
+                            Download the latest APK file for Android.</li>
+                        <li><strong>Install the APK</strong><br>
+                            Open the downloaded APK file.<br>
+                            If prompted, allow installation from unknown sources in your settings.<br>
+                            Complete the installation and launch the Vita3K app.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/1.webp" alt="Tutorial step 1" class="tutorial-img">
+
+                    <h3>Step 2: Install Firmware & Fonts</h3>
+                    <p>To run games properly, Vita3K requires firmware and font packages.</p>
+                    <ol>
+                        <li><strong>Download & Install Firmware</strong><br>
+                            Open Vita3K and select your language.<br>
+                            Tap <em>Download Firmware</em> and then <em>Download Update</em>.<br>
+                            Long-press the <em>Download Update</em> button and open it in a new tab.<br>
+                            This will download a file named <code>PSVUPDAT.PUP</code>.<br>
+                            Return to Vita3K, tap <em>Install Firmware File</em>, and select <code>PSVUPDAT.PUP</code>.<br>
+                            Let the installation complete, then press <em>OK</em>.<br>
+                            Download Firmware from <a href="https://www.playstation.com/en-us/support/hardware/psvita/system-software/">PlayStation Support</a>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/2.webp" alt="Tutorial step 2" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>(Optional) Download & Install Fonts</strong><br>
+                            Tap <em>Download Font Package</em> (it should download automatically).<br>
+                            Return to Vita3K and install the font package.<br>
+                            Once installed, click <em>Next</em> twice and tap <em>OK</em>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/3.webp" alt="Tutorial step 3" class="tutorial-img">
+
+                    <h3>Step 3: Set Up Your User Profile</h3>
+                    <p>A welcome message will pop up—close it by tapping the <em>X</em> or unchecking <em>Show Next Time</em>.<br>
+                    Click <em>Create User</em> and enter your username and profile picture.<br>
+                    Enable <em>Automatic User Login</em> and select your username.<br>
+                    You’re now on the PS Vita home screen!</p>
+                    <br>                   <img src="https://tatoone-dev.github.io/assets/tutorial/4.webp" alt="Tutorial step 4" class="screenshot-img">
+                    <h3>Step 4: Configure Controls (Optional)</h3>
+                    <p>If you prefer using a controller, follow these steps:</p>
+                    <ul>
+                        <li>Tap <em>Controls</em> > <em>Overlay</em> > Uncheck <em>Show Gamepad Overlay</em> to remove on-screen buttons.</li>
+                    </ul>
+
+                    <h3>Step 5: Install & Prepare PS Vita Games</h3>
+                    <ol>
+                        <li><strong>Install Games</strong><br>
+                            Tap <em>File</em> in the top-left corner.<br>
+                            Select <em>Install pkg</em>.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/5.webp" alt="Tutorial step 5" class="tutorial-img"><br>
+                            Navigate to your game directory and select a game to install it.<br>
+                            Once done, select <code>work.bin</code> and load the file you downloaded.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/6.jpg" alt="Tutorial step 6" class="tutorial-img">
+
+                    <h3>Step 6: Download & Configure GPU Drivers</h3>
+                    <ol>
+                        <li><strong>Download GPU Drivers</strong><br>
+                            Go to the settings of your mobile phone, computer, or tablet to search for the model name and further try to find on Google the GPU associated.<br>
+                            Once done, go to the <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases">AdrenoToolsDrivers GitHub Releases</a> and search for your mobile phone GPU model and the Turnip driver corresponding to your model.<br>
+                            In the Vita3K app, you must select the appropriate GPU driver corresponding to the one you downloaded. If one does not work, try different versions.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/7.jpg" alt="Tutorial step 7" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>Configuration</strong><br>
+                            <strong>Core Tab:</strong> Set up module mode to automatic.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/8.jpg" alt="Tutorial step 8" class="tutorial-img"><br>
+                            <strong>GPU Tab:</strong> Set as in the screenshot.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/9.jpg" alt="Tutorial step 9" class="tutorial-img"><br>
+                            <strong>CPU Tab:</strong> Enable optimizations and dynamic CPU backend.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/10.jpg" alt="Tutorial step 10" class="tutorial-img"><br>
+                            <strong>Other Graphic Configuration:</strong><br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/11.jpg" alt="Tutorial step 11" class="tutorial-img">
+                        </li>
+                    </ol>
+                `
+            },
+            fr: {
+                home: "Accueil",
+                tutorial: "Tutoriel",
+                support: "Support",
+                search_placeholder: "Rechercher...",
+                fully_playable: "Entièrement jouable",
+                playable: "Jouable",
+                least_playable: "Au moins jouable",
+                title: "Titre",
+                region: "Région",
+                file_size: "Taille du fichier (Mo)",
+                download: "Télécharger",
+                buy: "Acheter",
+                download_pkg: "💾 Télécharger en PKG",
+                download_bin: "💾 Télécharger BIN",
+                title_id: "ID du titre",
+                app_version: "Version de l'application",
+                version: "Version",
+                last_modified: "Dernière modification",
+                system_version: "Version du système",
+                content_id: "ID du contenu",
+                rating: "Évaluation",
+                results: "Affichage de {count} résultats",
+                dmca_notice: "Bienvenue sur Vita3K Games ! Vous devez posséder légalement la version originale de tout jeu avant de le télécharger. Le téléchargement ou la distribution non autorisés violent le DMCA et les droits de propriété de Sony sur la plateforme PS Vita. Assurez-vous de respecter toutes les lois applicables.",
+                offline_notice: "Aucune connexion Internet détectée. Une connexion Internet est requise pour une fonctionnalité complète.",
+                contact_us: "Contactez-nous",
+                name: "Nom",
+                email: "Email",
+                message: "Message",
+                send: "Envoyer",
+                tutorial_content: `
+                    <h2>Qu'est-ce que Vita3K ?</h2>
+                    <p>Vita3K est le premier émulateur PlayStation Vita open-source, permettant de jouer à des jeux Vita sur diverses plateformes, y compris Android. Bien qu'il soit encore en développement, il a fait de grands progrès pour exécuter de nombreux jeux PS Vita de manière fluide.</p>
+
+                    <h3>Étape 1 : Télécharger et installer Vita3K</h3>
+                    <ol>
+                        <li><strong>Télécharger l'APK Vita3K</strong><br>
+                            Rendez-vous sur les <a href="https://github.com/Vita3K/Vita3K-Android/releases/">Vita3K GitHub Releases</a> ou le <a href="https://vita3k.org/">site officiel Vita3K</a>.<br>
+                            Téléchargez le dernier fichier APK pour Android.</li>
+                        <li><strong>Installer l'APK</strong><br>
+                            Ouvrez le fichier APK téléchargé.<br>
+                            Si demandé, autorisez l'installation depuis des sources inconnues dans vos paramètres.<br>
+                            Terminez l'installation et lancez l'application Vita3K.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/1.webp" alt="Étape du tutoriel 1" class="tutorial-img">
+
+                    <h3>Étape 2 : Installer le firmware et les polices</h3>
+                    <p>Pour exécuter les jeux correctement, Vita3K nécessite des packages de firmware et de polices.</p>
+                    <ol>
+                        <li><strong>Télécharger et installer le firmware</strong><br>
+                            Ouvrez Vita3K et sélectionnez votre langue.<br>
+                            Appuyez sur <em>Télécharger le firmware</em> puis <em>Télécharger la mise à jour</em>.<br>
+                            Faites un appui long sur le bouton <em>Télécharger la mise à jour</em> et ouvrez-le dans un nouvel onglet.<br>
+                            Cela téléchargera un fichier nommé <code>PSVUPDAT.PUP</code>.<br>
+                            Revenez à Vita3K, appuyez sur <em>Installer le fichier de firmware</em>, et sélectionnez <code>PSVUPDAT.PUP</code>.<br>
+                            Laissez l'installation se terminer, puis appuyez sur <em>OK</em>.<br>
+                            Téléchargez le firmware depuis <a href="https://www.playstation.com/fr-fr/support/hardware/psvita/system-software/">Support PlayStation</a>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/2.webp" alt="Étape du tutoriel 2" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>(Facultatif) Télécharger et installer les polices</strong><br>
+                            Appuyez sur <em>Télécharger le package de polices</em> (le téléchargement devrait se faire automatiquement).<br>
+                            Revenez à Vita3K et installez le package de polices.<br>
+                            Une fois installé, cliquez sur <em>Suivant</em> deux fois et appuyez sur <em>OK</em>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/3.webp" alt="Étape du tutoriel 3" class="tutorial-img">
+
+                    <h3>Étape 3 : Configurer votre profil utilisateur</h3>
+                    <p>Un message de bienvenue apparaîtra—fermez-le en appuyant sur <em>X</em> ou en décochant <em>Afficher la prochaine fois</em>.<br>
+                    Cliquez sur <em>Créer un utilisateur</em> et entrez votre nom d'utilisateur et votre photo de profil.<br>
+                    Activez <em>Connexion automatique de l'utilisateur</em> et sélectionnez votre nom d'utilisateur.<br>
+                    Vous êtes maintenant sur l'écran d'accueil de la PS Vita !</p>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/4.webp" alt="Étape du tutoriel 4" class="tutorial-img">
+
+                    <h3>Étape 4 : Configurer les contrôles (Facultatif)</h3>
+                    <p>Si vous préférez utiliser une manette, suivez ces étapes :</p>
+                    <ul>
+                        <li>Appuyez sur <em>Contrôles</em> > <em>Superposition</em> > Décochez <em>Afficher la superposition de la manette</em> pour supprimer les boutons à l'écran.</li>
+                    </ul>
+
+                    <h3>Étape 5 : Installer et préparer les jeux PS Vita</h3>
+                    <ol>
+                        <li><strong>Installer les jeux</strong><br>
+                            Appuyez sur <em>Fichier</em> dans le coin supérieur gauche.<br>
+                            Sélectionnez <em>Installer pkg</em>.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/5.webp" alt="Étape du tutoriel 5" class="tutorial-img"><br>
+                            Naviguez vers votre répertoire de jeux et sélectionnez un jeu pour l'installer.<br>
+                            Une fois terminé, sélectionnez <code>work.bin</code> et chargez le fichier que vous avez téléchargé.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/6.jpg" alt="Étape du tutoriel 6" class="tutorial-img">
+
+                    <h3>Étape 6 : Télécharger et configurer les pilotes GPU</h3>
+                    <ol>
+                        <li><strong>Télécharger les pilotes GPU</strong><br>
+                            Allez dans les paramètres de votre téléphone mobile, ordinateur ou tablette pour rechercher le nom du modèle et essayez de trouver sur Google le GPU associé.<br>
+                            Une fois fait, rendez-vous sur <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases">AdrenoToolsDrivers GitHub Releases</a> et recherchez le modèle GPU de votre téléphone mobile et le pilote Turnip correspondant à votre modèle.<br>
+                            Dans l'application Vita3K, vous devez sélectionner le pilote GPU approprié correspondant à celui que vous avez téléchargé. Si l'un ne fonctionne pas, essayez différentes versions.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/7.jpg" alt="Étape du tutoriel 7" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>Configuration</strong><br>
+                            <strong>Onglet Core :</strong> Configurez le mode module sur automatique.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/8.jpg" alt="Étape du tutoriel 8" class="tutorial-img"><br>
+                            <strong>Onglet GPU :</strong> Configurez comme dans la capture d'écran.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/9.jpg" alt="Étape du tutoriel 9" class="tutorial-img"><br>
+                            <strong>Onglet CPU :</strong> Activez les optimisations et le backend CPU dynamique.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/10.jpg" alt="Étape du tutoriel 10" class="tutorial-img"><br>
+                            <strong>Autres configurations graphiques :</strong><br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/11.jpg" alt="Étape du tutoriel 11" class="tutorial-img">
+                        </li>
+                    </ol>
+                `
+            },
+            ar: {
+                home: "الرئيسية",
+                tutorial: "البرنامج التعليمي",
+                support: "الدعم",
+                search_placeholder: "البحث...",
+                fully_playable: "قابل للعب بالكامل",
+                playable: "قابل للعب",
+                least_playable: "قابل للعب على الأقل",
+                title: "العنوان",
+                region: "المنطقة",
+                file_size: "حجم الملف (ميغابايت)",
+                download: "تحميل",
+                buy: "شراء",
+                download_pkg: "💾 تحميل كـ PKG",
+                download_bin: "💾 تحميل BIN",
+                title_id: "معرف العنوان",
+                app_version: "إصدار التطبيق",
+                version: "الإصدار",
+                last_modified: "آخر تعديل",
+                system_version: "إصدار النظام",
+                content_id: "معرف المحتوى",
+                rating: "التقييم",
+                results: "عرض {count} نتائج",
+                dmca_notice: "مرحبًا بكم في Vita3K Games! يجب أن تمتلك النسخة الأصلية من أي لعبة بشكل قانوني قبل التحميل. التحميل أو التوزيع غير المصرح به ينتهك قانون DMCA وحقوق ملكية سوني لمنصة PS Vita. تأكد من الامتثال لجميع القوانين المعمول بها.",
+                offline_notice: "لم يتم الكشف عن اتصال بالإنترنت. يلزم اتصال بالإنترنت للحصول على الوظائف الكاملة.",
+                contact_us: "اتصل بنا",
+                name: "الاسم",
+                email: "البريد الإلكتروني",
+                message: "الرسالة",
+                send: "إرسال",
+                tutorial_content: `
+                    <h2>ما هو Vita3K؟</h2>
+                    <p>Vita3K هو أول محاكي PlayStation Vita مفتوح المصدر، يتيح لك تشغيل ألعاب Vita على منصات مختلفة، بما في ذلك Android. على الرغم من أنه لا يزال قيد التطوير، فقد أحرز تقدمًا كبيرًا في تشغيل العديد من ألعاب PS Vita بسلاسة.</p>
+
+                    <h3>الخطوة 1: تحميل وتثبيت Vita3K</h3>
+                    <ol>
+                        <li><strong>تحميل APK Vita3K</strong><br>
+                            انتقل إلى <a href="https://github.com/Vita3K/Vita3K-Android/releases/">إصدارات Vita3K على GitHub</a> أو <a href="https://vita3k.org/">الموقع الرسمي لـ Vita3K</a>.<br>
+                            قم بتحميل أحدث ملف APK لنظام Android.</li>
+                        <li><strong>تثبيت APK</strong><br>
+                            افتح ملف APK الذي تم تحميله.<br>
+                            إذا طُلب منك، قم بتمكين التثبيت من مصادر غير معروفة في إعداداتك.<br>
+                            أكمل التثبيت وشغّل تطبيق Vita3K.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/1.webp" alt="خطوة التعليمات 1" class="tutorial-img">
+
+                    <h3>الخطوة 2: تثبيت البرامج الثابتة والخطوط</h3>
+                    <p>لتشغيل الألعاب بشكل صحيح، يتطلب Vita3K حزم البرامج الثابتة والخطوط.</p>
+                    <ol>
+                        <li><strong>تحميل وتثبيت البرامج الثابتة</strong><br>
+                            افتح Vita3K واختر لغتك.<br>
+                            اضغط على <em>تحميل البرامج الثابتة</em> ثم <em>تحميل التحديث</em>.<br>
+                            اضغط مطولًا على زر <em>تحميل التحديث</em> وافتحه في علامة تبويب جديدة.<br>
+                            سيؤدي هذا إلى تحميل ملف باسم <code>PSVUPDAT.PUP</code>.<br>
+                            ارجع إلى Vita3K، اضغط على <em>تثبيت ملف البرامج الثابتة</em>، واختر <code>PSVUPDAT.PUP</code>.<br>
+                            دع التثبيت يكتمل، ثم اضغط على <em>موافق</em>.<br>
+                            قم بتحميل البرامج الثابتة من <a href="https://www.playstation.com/ar-sa/support/hardware/psvita/system-software/">دعم PlayStation</a>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/2.webp" alt="خطوة التعليمات 2" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>(اختياري) تحميل وتثبيت الخطوط</strong><br>
+                            اضغط على <em>تحميل حزمة الخطوط</em> (يجب أن يتم التحميل تلقائيًا).<br>
+                            ارجع إلى Vita3K وقم بتثبيت حزمة الخطوط.<br>
+                            بمجرد التثبيت، انقر على <em>التالي</em> مرتين واضغط على <em>موافق</em>.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/3.webp" alt="خطوة التعليمات 3" class="tutorial-img">
+
+                    <h3>الخطوة 3: إعداد ملف تعريف المستخدم الخاص بك</h3>
+                    <p>ستظهر رسالة ترحيب—أغلقها بالضغط على <em>X</em> أو بإلغاء تحديد <em>إظهار المرة القادمة</em>.<br>
+                    انقر على <em>إنشاء مستخدم</em> وأدخل اسم المستخدم وصورة الملف الشخصي.<br>
+                    قم بتمكين <em>تسجيل دخول المستخدم تلقائيًا</em> واختر اسم المستخدم الخاص بك.<br>
+                    أنت الآن على شاشة الصفحة الرئيسية لـ PS Vita!</p>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/4.webp" alt="خطوة التعليمات 4" class="tutorial-img">
+
+                    <h3>الخطوة 4: تهيئة التحكم (اختياري)</h3>
+                    <p>إذا كنت تفضل استخدام وحدة تحكم، اتبع هذه الخطوات:</p>
+                    <ul>
+                        <li>اضغط على <em>التحكم</em> > <em>التراكب</em> > قم بإلغاء تحديد <em>إظهار تراكب لوحة الألعاب</em> لإزالة الأزرار على الشاشة.</li>
+                    </ul>
+
+                    <h3>الخطوة 5: تثبيت وتحضير ألعاب PS Vita</h3>
+                    <ol>
+                        <li><strong>تثبيت الألعاب</strong><br>
+                            اضغط على <em>ملف</em> في الزاوية العلوية اليسرى.<br>
+                            اختر <em>تثبيت pkg</em>.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/5.webp" alt="خطوة التعليمات 5" class="tutorial-img"><br>
+                            انتقل إلى دليل الألعاب الخاص بك واختر لعبة لتثبيتها.<br>
+                            بمجرد الانتهاء، اختر <code>work.bin</code> وقم بتحميل الملف الذي قمت بتحميله.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/6.jpg" alt="خطوة التعليمات 6" class="tutorial-img">
+
+                    <h3>الخطوة 6: تحميل وتهيئة برامج تشغيل GPU</h3>
+                    <ol>
+                        <li><strong>تحميل برامج تشغيل GPU</strong><br>
+                            انتقل إلى إعدادات هاتفك المحمول أو جهازك اللوحي أو الكمبيوتر للبحث عن اسم الطراز وحاول العثور على Google لمعرفة وحدة معالجة الرسوميات المرتبطة.<br>
+                            بمجرد الانتهاء، انتقل إلى <a href="https://github.com/K11MCH1/AdrenoToolsDrivers/releases">إصدارات AdrenoToolsDrivers على GitHub</a> وابحث عن طراز وحدة معالجة الرسوميات لهاتفك المحمول وبرنامج تشغيل Turnip المقابل لطرازك.<br>
+                            في تطبيق Vita3K، يجب عليك اختيار برنامج تشغيل GPU المناسب المقابل للذي قمت بتحميله. إذا لم يعمل أحدها، جرب إصدارات مختلفة.</li>
+                    </ol>
+                    <img src="https://tatoone-dev.github.io/assets/tutorial/7.jpg" alt="خطوة التعليمات 7" class="tutorial-img">
+                    <ol start="2">
+                        <li><strong>التهيئة</strong><br>
+                            <strong>علامة تبويب Core:</strong> قم بإعداد وضع الوحدة على تلقائي.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/8.jpg" alt="خطوة التعليمات 8" class="tutorial-img"><br>
+                            <strong>علامة تبويب GPU:</strong> قم بالإعداد كما في لقطة الشاشة.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/9.jpg" alt="خطوة التعليمات 9" class="tutorial-img"><br>
+                            <strong>علامة تبويب CPU:</strong> قم بتمكين التحسينات وخلفية CPU ديناميكية.<br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/10.jpg" alt="خطوة التعليمات 10" class="tutorial-img"><br>
+                            <strong>تهيئة الرسوميات الأخرى:</strong><br>
+                            <img src="https://tatoone-dev.github.io/assets/tutorial/11.jpg" alt="خطوة التعليمات 11" class="tutorial-img">
+                        </li>
+                    </ol>
+                `
+            }
+        };
+
+        // Region to flag emoji mapping
+        const regionFlags = {
+            EU: "🇪🇺",
+            US: "🇺🇸",
+            JP: "🇯🇵"
+        };
+
+        // Rating emoji mapping
+        const ratingEmojis = {
+            "3": "⭐⭐⭐⭐⭐",
+            "2": "🙂",
+            "1": "👍",
+            "0": "😕",
+            "": "😕"
+        };
+
+        // State
+        let games = [];
+        let sortDirection = 1;
+
+        // Internet connectivity check
+        function checkInternet() {
+            if (!navigator.onLine) {
+                document.getElementById("offline-modal").style.display = "flex";
+                return false;
+            }
+            return true;
+        }
+
+        // Load JSON data
+        async function loadData(playability = "3") {
+            if (!checkInternet()) return;
+            try {
+                const url = `games${playability}.json`;
+                const response = await fetch(url);
+                games = await response.json();
+                renderTable();
+            } catch (error) {
+                console.error("Error loading data:", error);
+                document.getElementById("table-body").innerHTML = '<tr><td colspan="5" class="text-center">Error loading data</td></tr>';
+            }
+        }
+
+        // Convert bytes to MB
+        function bytesToMB(bytes) {
+            return (bytes / (1024 * 1024)).toFixed(2);
+        }
+
+        // Search all fields
+        function searchAllFields(game, searchTerm) {
+            searchTerm = searchTerm.toLowerCase();
+            return Object.values(game).some(value => 
+                value && value.toString().toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Render table
+        function renderTable(searchTerm = "") {
+            const tbody = document.getElementById("table-body");
+            tbody.innerHTML = "";
+            const filteredGames = games.filter(game => 
+                searchAllFields(game, searchTerm)
+            );
+
+            // Update result count
+            const lang = document.getElementById("language-select").value;
+            document.getElementById("result-count").textContent = 
+                translations[lang].results.replace("{count}", filteredGames.length);
+
+            filteredGames.forEach((game, index) => {
+                const row = document.createElement("tr");
+                row.className = "fade-in";
+                row.dataset.index = index;
+                row.innerHTML = `
+                    <td class="title-cell" data-index="${index}" data-label="${translations[lang].title}">${game.Title_RIF_Missing}</td>
+                    <td data-label="${translations[lang].region}">${regionFlags[game.Region] || game.Region} ${game.Region}</td>
+                    <td data-label="${translations[lang].file_size}">${bytesToMB(game.pkg_File_Size)} MB</td>
+                    <td data-label="${translations[lang].download}">
+                        <a href="${game.pkg_link}" data-key="download_pkg">💾 Download as PKG</a><br>
+                        <a href="${getBinUrl(game.License)}" download="work.bin" data-key="download_bin">💾 Download BIN</a>
+                    </td>
+                    <td data-label="${translations[lang].buy}">
+                        <a href="https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(game.Title_RIF_Missing)}" target="_blank">
+                            <img src="https://tatoone-dev.github.io/assets/buy.jpeg" alt="Buy" class="buy-img">
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(row);
+
+                const detailsRow = document.createElement("tr");
+                detailsRow.className = "details-row";
+                detailsRow.id = `details-${index}`;
+                detailsRow.innerHTML = `
+                    <td colspan="5">
+                        <div>
+                            <strong data-key="title_id"></strong> ${game.pkg_Title_ID}<br>
+                            <strong data-key="app_version"></strong> ${game.APP_VER}<br>
+                            <strong data-key="version"></strong> ${game.VERSION}<br>
+                            <strong data-key="last_modified"></strong> ${game.last_modified}<br>
+                            <strong data-key="system_version"></strong> ${game.PSP2_SYSTEM_VER}<br>
+                            <strong data-key="content_id"></strong> ${game.pkg_Content_ID}<br>
+                            <strong data-key="rating"></strong> ${ratingEmojis[game.relativeplayability]}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(detailsRow);
+            });
+
+            // Add click listeners for title cells
+            document.querySelectorAll(".title-cell").forEach(cell => {
+                cell.addEventListener("click", () => {
+                    const index = cell.dataset.index;
+                    const row = cell.parentElement;
+                    const detailsRow = document.getElementById(`details-${index}`);
+                    row.classList.toggle("highlighted");
+                    detailsRow.classList.toggle("show");
+                });
+            });
+
+            updateTranslations();
+        }
+
+        // Sort table
+        function sortTable() {
+            games.sort((a, b) => {
+                return a.Title_RIF_Missing.localeCompare(b.Title_RIF_Missing) * sortDirection;
+            });
+            sortDirection *= -1;
+            renderTable(document.getElementById("search-input").value);
+        }
+
+        // Update translations
+        function updateTranslations() {
+            const lang = document.getElementById("language-select").value;
+            document.querySelectorAll("[data-key]").forEach(elem => {
+                const key = elem.getAttribute("data-key");
+                if (translations[lang][key]) {
+                    if (elem.tagName === "INPUT") {
+                        elem.placeholder = translations[lang][key];
+                    } else {
+                        elem.textContent = translations[lang][key];
+                    }
+                }
+            });
+            document.getElementById("result-count").textContent = 
+                translations[lang].results.replace("{count}", games.filter(game => 
+                    searchAllFields(game, document.getElementById("search-input").value)
+                ).length);
+            document.getElementById("body").dir = lang === "ar" ? "rtl" : "ltr";
+        }
+
+        // Render tutorial
+        function renderTutorial() {
+            const lang = document.getElementById("language-select").value;
+            document.getElementById("tutorial-content").innerHTML = translations[lang].tutorial_content;
+        }
+
+        // Language persistence
+        function setLanguage(lang) {
+            localStorage.setItem("language", lang);
+            document.getElementById("language-select").value = lang;
+            updateTranslations();
+            renderTable(document.getElementById("search-input").value);
+            renderTutorial();
+        }
+
+        function getLanguage() {
+            return localStorage.getItem("language") || "en";
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            const isDark = document.getElementById("dark-mode-switch").checked;
+            document.body.classList.toggle("dark-mode", isDark);
+            localStorage.setItem("darkMode", isDark);
+            document.getElementById("mode-icon").textContent = isDark ? "☀️" : "🌙";
+        }
+
+        function initDarkMode() {
+            const isDark = localStorage.getItem("darkMode") === "true";
+            document.getElementById("dark-mode-switch").checked = isDark;
+            document.body.classList.toggle("dark-mode", isDark);
+            document.getElementById("mode-icon").textContent = isDark ? "☀️" : "🌙";
+        }
+
+        // Toggle content
+        function showHome() {
+            document.getElementById("home-content").style.display = "block";
+            document.getElementById("tutorial-content").style.display = "none";
+            document.getElementById("contact-content").style.display = "none";
+        }
+
+        function showTutorial() {
+            document.getElementById("home-content").style.display = "none";
+            document.getElementById("tutorial-content").style.display = "block";
+            document.getElementById("contact-content").style.display = "none";
+            renderTutorial();
+        }
+
+        function showContact() {
+            document.getElementById("home-content").style.display = "none";
+            document.getElementById("tutorial-content").style.display = "none";
+            document.getElementById("contact-content").style.display = "block";
+        }
+
+        // Contact form submission
+        function handleContactSubmit() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+            const dateTime = new Date().toLocaleString();
+
+            if (name && email && message) {
+                const subject = encodeURIComponent("Ask for support Vita3K games");
+                const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nDate: ${dateTime}\n\nMessage:\n${message}`);
+                const mailtoLink = `mailto:tatoone.dev@gmail.com?subject=${subject}&body=${body}`;
+                window.location.href = mailtoLink;
+
+                // Reset form
+                document.getElementById("name").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("message").value = "";
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        // Event listeners
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize language
+            setLanguage(getLanguage());
+
+            // Initialize dark mode
+            initDarkMode();
+
+            // Load initial data
+            loadData(document.getElementById("playability-select").value);
+
+            // Navigation
+            document.querySelectorAll(".nav-link").forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const key = link.getAttribute("data-key");
+                    if (key === "home") showHome();
+                    else if (key === "tutorial") showTutorial();
+                    else if (key === "support") showContact();
+                });
+            });
+
+            // Language change
+            document.getElementById("language-select").addEventListener("change", (e) => {
+                setLanguage(e.target.value);
+            });
+
+            // Dark mode toggle
+            document.getElementById("dark-mode-switch").addEventListener("change", toggleDarkMode);
+
+            // Search input
+            document.getElementById("search-input").addEventListener("input", (e) => {
+                renderTable(e.target.value);
+            });
+
+            // Playability change
+            document.getElementById("playability-select").addEventListener("change", (e) => {
+                loadData(e.target.value);
+            });
+
+            // Table sort
+            document.querySelector("th[data-sort='title']").addEventListener("click", sortTable);
+
+            // Contact form
+            document.getElementById("send-button").addEventListener("click", handleContactSubmit);
+
+            // Service worker registration
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("/sw.js").then(() => {
+                    console.log("Service Worker registered");
+                }).catch(error => {
+                    console.error("Service Worker registration failed:", error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
