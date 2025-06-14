@@ -9,6 +9,10 @@ The Vita3K Games database is a collection that store metadata for PlayStation Vi
 - **Purchase Links**: Links to eBay for purchasing physical copies.
 - **Details View**: Clicking a game title reveals additional metadata (e.g., Title ID, versions, rating).
 
+## Installation
+You can simply clicking on the install icon on the navbar of your browser to install it on your platform (Google Chrome, Windows, Linux).
+![screenshot](assets/install.png)
+
 ## Notes
 
 - **Legal Compliance**: Users are reminded via a DMCA modal to legally own games before downloading.
